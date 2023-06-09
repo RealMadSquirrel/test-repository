@@ -2,7 +2,7 @@ import unittest
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.options import Options
+
 
 driver = webdriver.Firefox('C:\\Users\\user\\Documents\\GitHub\\test-repository\\geckodriver')
 driver.maximize_window()
