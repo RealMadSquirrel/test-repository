@@ -19,12 +19,23 @@ time.sleep(2)
 
 def are_elements_present(driver, *args):
     return len(driver.find_elements(*args)) > 0
-are_elements_present(driver, By.CSS_SELECTOR, "[class^=sticker]")
 
-list_a = driver.find_elements(By.CSS_SELECTOR, "[class^=sticker]")
-for i in list_a:
-    if i is not None:
-     print("Cтикер у элемента номер",list_a.index(i),"есть")
+def is_element_present(driver, *args):
+    try:
+        driver.find_element(*args)
+        return True
+    except NoSuchElementException:
+        return False
+
+if are_elements_present(driver,By.CLASS_NAME, "product") is True:
+ len_ = len(driver.find_elements(By.CLASS_NAME, "product"))
+ i=0
+ while i < len_:
+        temp = driver.find_elements(By.CLASS_NAME, "product")
+        if is_element_present(temp[i],By.CLASS_NAME, "sticker") is True:
+            print("Cтикер у товара номер",i,"есть")
+        else:
+            print("Cтикер у товара не найден")
+        i=i+1
+
 driver.quit()
-if __name__ == '__main__':
-    unittest.main()
