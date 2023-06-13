@@ -32,10 +32,12 @@ if are_elements_present(driver,By.CLASS_NAME, "product") is True:
  i=0
  while i < len_:
         temp = driver.find_elements(By.CLASS_NAME, "product")
-        if is_element_present(temp[i],By.CLASS_NAME, "sticker") is True:
-            print("Cтикер у товара номер",i,"есть")
+        if len(temp[i].find_elements(By.CLASS_NAME, "sticker")) == 1:
+            print("У товара номер",i,"ровно один стикер")
+            if len(temp[i].find_elements(By.CLASS_NAME, "sticker")) > 1:
+                print("У товара стикеров больше, чем один ")
         else:
-            print("Cтикер у товара не найден")
+            print("У товара нет стикеров ")
         i=i+1
 
 driver.quit()
