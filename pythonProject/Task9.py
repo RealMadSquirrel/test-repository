@@ -47,19 +47,12 @@ if are_elements_present(table, By.CLASS_NAME, "row") is True:
         temp = driver.find_elements(By.CLASS_NAME, "row")
         zones = temp[i].find_element(By.XPATH, "td[3]/a")
         zones.click()
-        table_zones = driver.find_element(By.ID, "table-zones")
-        name_zones = table_zones.find_elements(By.XPATH, "tbody/tr/td[3]/select")
+        name_zones = driver.find_elements(By.XPATH, "//*[@id='table-zones']/tbody/tr/td[3]/select")
         l = 0
         while l < len(name_zones):
-            if len(name_zones[l].get_attribute("value")) > 0:
-                temp = name_zones[l].find_elements(By.XPATH, "option")
-                k=0
-                while k<len(temp):
-                    selected_country = temp[k].get_attribute("selected")
-                    if selected_country == "true":
-                        list_zones.append(temp[k].text)
-                        print(temp[k].text)
-                    k=k+1
+            pp = name_zones[l].find_element(By.XPATH, "option[@selected='selected']")
+            list_zones.append(pp.text)
+            print(pp.text)
             l = l + 1
         test_alf_sort(list_zones)
         driver.back()
