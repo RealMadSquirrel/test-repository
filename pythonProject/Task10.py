@@ -70,51 +70,49 @@ class test_10(unittest.TestCase):
         box = self.driver.find_element(By.XPATH, "//*[@id='box-campaigns']")
         price1 = box.find_element(By.CLASS_NAME, "regular-price")
         color_grey1 = UtilParser.parseStrToColor(price1.value_of_css_property("color"))
+        text_decoration1=price1.value_of_css_property("text-decoration").split()
         box.find_element(By.CLASS_NAME, "link").click()
         price2 = self.driver.find_element(By.CLASS_NAME, "regular-price")
         color_grey2 = UtilParser.parseStrToColor(price2.value_of_css_property("color"))
-        if color_grey1.red==color_grey1.green==color_grey1.blue and color_grey2.red==color_grey2.green==color_grey2.blue:
-            print("Тест пройден", color_grey1.red,color_grey1.green,color_grey1.blue,"и",color_grey2.red,color_grey2.green,color_grey2.blue, "- одинаковые значения для каналов R, G и B")
+        text_decoration2 = price2.value_of_css_property("text-decoration").split()
+        if color_grey1.red==color_grey1.green==color_grey1.blue and color_grey2.red==color_grey2.green==color_grey2.blue and text_decoration1[0]==text_decoration2[0]:
+            print("Тест пройден", color_grey1.red,color_grey1.green,color_grey1.blue,"и",color_grey2.red,color_grey2.green,color_grey2.blue, "- одинаковые значения для каналов R, G и B и обычная цена зачёркнутая")
         else:
             print("Тест не пройден")
         self.driver.back()
 
 
 
-    def test_3_price_color_red(self):
+    def test_4_price_color_red(self):
         box = self.driver.find_element(By.XPATH, "//*[@id='box-campaigns']")
         price1 = box.find_element(By.CLASS_NAME, "campaign-price")
         color_grey1 = UtilParser.parseStrToColor(price1.value_of_css_property("color"))
-        t= price1.get_attribute("style")
+        font_weight1 = price1.value_of_css_property("font-weight")
         box.find_element(By.CLASS_NAME, "link").click()
         price2 = self.driver.find_element(By.CLASS_NAME, "campaign-price")
         color_grey2 = UtilParser.parseStrToColor(price2.value_of_css_property("color"))
-        if color_grey1.green == 0 and color_grey1.blue ==0 and color_grey2.green ==0 and color_grey2.blue == 0:
-            print("Тест пройден", color_grey1.green, color_grey1.blue, "и",color_grey2.green, color_grey2.blue, "- каналы G и B имеют нулевые значения")
+        font_weight2 = price2.value_of_css_property("font-weight")
+        if color_grey1.green == 0 and color_grey1.blue ==0 and color_grey2.green ==0 and color_grey2.blue == 0 and font_weight1==font_weight2:
+            print("Тест пройден", color_grey1.green, color_grey1.blue, "и",color_grey2.green, color_grey2.blue, "- каналы G и B имеют нулевые значения и акционная цена жирная")
         else:
             print("Тест не пройден")
         self.driver.back()
 
 
-    def test_3_price_size(self):
+    def test_5_price_size(self):
         box = self.driver.find_element(By.XPATH, "//*[@id='box-campaigns']")
-        height1 = box.find_element(By.CLASS_NAME, "campaign-price").size.get('height')
-        width1 = box.find_element(By.CLASS_NAME, "campaign-price").size.get('width')
-        height2 = box.find_element(By.CLASS_NAME, "regular-price").size.get('height')
-        width2 = box.find_element(By.CLASS_NAME, "regular-price").size.get('width')
-        if height1 > height2 and width1 > width2:
-            print("Тест пройден", height1, ">", height2, width1, ">", width2)
+        font_size1 = box.find_element(By.CLASS_NAME, "campaign-price").value_of_css_property("font-size")
+        font_size2 = box.find_element(By.CLASS_NAME, "regular-price").value_of_css_property("font-size")
+        if font_size1 > font_size2:
+            print("Тест пройден", font_size1, ">", font_size2)
         else:
             print("Тест не пройден")
 
         box.find_element(By.CLASS_NAME, "link").click()
-
-        height3 = self.driver.find_element(By.CLASS_NAME, "campaign-price").size.get('height')
-        width3 = self.driver.find_element(By.CLASS_NAME, "campaign-price").size.get('width')
-        height4 = self.driver.find_element(By.CLASS_NAME, "regular-price").size.get('height')
-        width4 = self.driver.find_element(By.CLASS_NAME, "regular-price").size.get('width')
-        if height3 > height4 and width3 > width4:
-            print("Тест пройден", height3, ">", height4, width3, ">", width4)
+        font_size3 = self.driver.find_element(By.CLASS_NAME, "campaign-price").value_of_css_property("font-size")
+        font_size4 = self.driver.find_element(By.CLASS_NAME, "regular-price").value_of_css_property("font-size")
+        if font_size3 > font_size4:
+            print("Тест пройден", font_size3, ">", font_size4)
         else:
             print("Тест не пройден")
         self.driver.back()
