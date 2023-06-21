@@ -21,6 +21,7 @@ class UtilParser:
                      , int(integers[2])
                      , int(integers[3])
                      )
+
 class test_10(unittest.TestCase):
     """Авторизуемся и вводим код"""
 
@@ -75,7 +76,7 @@ class test_10(unittest.TestCase):
         price2 = self.driver.find_element(By.CLASS_NAME, "regular-price")
         color_grey2 = UtilParser.parseStrToColor(price2.value_of_css_property("color"))
         text_decoration2 = price2.value_of_css_property("text-decoration").split()
-        if color_grey1.red==color_grey1.green==color_grey1.blue and color_grey2.red==color_grey2.green==color_grey2.blue and text_decoration1[0]==text_decoration2[0]:
+        if color_grey1.red == color_grey1.green == color_grey1.blue and color_grey2.red == color_grey2.green == color_grey2.blue and text_decoration1[0] =="line-through" and text_decoration2[0] =="line-through":
             print("Тест пройден", color_grey1.red,color_grey1.green,color_grey1.blue,"и",color_grey2.red,color_grey2.green,color_grey2.blue, "- одинаковые значения для каналов R, G и B и обычная цена зачёркнутая")
         else:
             print("Тест не пройден")
@@ -92,7 +93,7 @@ class test_10(unittest.TestCase):
         price2 = self.driver.find_element(By.CLASS_NAME, "campaign-price")
         color_grey2 = UtilParser.parseStrToColor(price2.value_of_css_property("color"))
         font_weight2 = price2.value_of_css_property("font-weight")
-        if color_grey1.green == 0 and color_grey1.blue ==0 and color_grey2.green ==0 and color_grey2.blue == 0 and font_weight1==font_weight2:
+        if color_grey1.green == 0 and color_grey1.blue == 0 and color_grey2.green == 0 and color_grey2.blue == 0 and int(font_weight1) == 700 and int(font_weight2) == 700:
             print("Тест пройден", color_grey1.green, color_grey1.blue, "и",color_grey2.green, color_grey2.blue, "- каналы G и B имеют нулевые значения и акционная цена жирная")
         else:
             print("Тест не пройден")
@@ -103,16 +104,20 @@ class test_10(unittest.TestCase):
         box = self.driver.find_element(By.XPATH, "//*[@id='box-campaigns']")
         font_size1 = box.find_element(By.CLASS_NAME, "campaign-price").value_of_css_property("font-size")
         font_size2 = box.find_element(By.CLASS_NAME, "regular-price").value_of_css_property("font-size")
-        if font_size1 > font_size2:
-            print("Тест пройден", font_size1, ">", font_size2)
+        font_size1 = re.findall(r"\d+\.\d+|\d+", font_size1)
+        font_size2 = re.findall(r"\d+\.\d+|\d+", font_size2)
+        if font_size1[0] > font_size2[0]:
+            print("Тест пройден", font_size1[0], ">", font_size2[0])
         else:
             print("Тест не пройден")
 
         box.find_element(By.CLASS_NAME, "link").click()
         font_size3 = self.driver.find_element(By.CLASS_NAME, "campaign-price").value_of_css_property("font-size")
         font_size4 = self.driver.find_element(By.CLASS_NAME, "regular-price").value_of_css_property("font-size")
-        if font_size3 > font_size4:
-            print("Тест пройден", font_size3, ">", font_size4)
+        font_size3 = re.findall(r"\d+\.\d+|\d+", font_size3)
+        font_size4 = re.findall(r"\d+\.\d+|\d+", font_size4)
+        if font_size3[0] > font_size4[0]:
+            print("Тест пройден", font_size3[0], ">", font_size4[0])
         else:
             print("Тест не пройден")
         self.driver.back()
