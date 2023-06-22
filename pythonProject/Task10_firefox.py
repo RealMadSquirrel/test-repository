@@ -9,8 +9,7 @@ class test_10(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.options = webdriver.ChromeOptions()
-        cls.driver = webdriver.Chrome(options=cls.options)
+        cls.driver = webdriver.Firefox(capabilities={"marionette": False})
         cls.driver.maximize_window()
         cls.driver.get("http://localhost/litecart/en/")
 
@@ -48,6 +47,7 @@ class test_10(unittest.TestCase):
             print("Тест не пройден")
         self.driver.back()
 
+
     def test_3_price_color_grey(self):
         box = self.driver.find_element(By.XPATH, "//*[@id='box-campaigns']")
         price1 = box.find_element(By.CLASS_NAME, "regular-price")
@@ -57,14 +57,13 @@ class test_10(unittest.TestCase):
         price2 = self.driver.find_element(By.CLASS_NAME, "regular-price")
         color_grey2 = re.findall(r"\d+", price2.value_of_css_property("color"))
         text_decoration2 = price2.value_of_css_property("text-decoration").split()
-        if int(color_grey1[0]) == int(color_grey1[1]) == int(color_grey1[2]) and int(color_grey2[0]) == int(
-                color_grey2[1]) == int(color_grey2[2]) and text_decoration1[0] == "line-through" and text_decoration2[
-            0] == "line-through":
-            print("Тест пройден", color_grey1[0], color_grey1[1], color_grey1[2], "и", color_grey2[0], color_grey2[1],
-                  color_grey2[2], "- одинаковые значения для каналов R, G и B и обычная цена зачёркнутая")
+        if int(color_grey1[0]) == int(color_grey1[1]) == int(color_grey1[2]) and int(color_grey2[0]) == int(color_grey2[1]) == int(color_grey2[2]) and text_decoration1[0] =="line-through" and text_decoration2[0] =="line-through":
+            print("Тест пройден", color_grey1[0],color_grey1[1],color_grey1[2],"и",color_grey2[0],color_grey2[1],color_grey2[2], "- одинаковые значения для каналов R, G и B и обычная цена зачёркнутая")
         else:
             print("Тест не пройден")
         self.driver.back()
+
+
 
     def test_4_price_color_red(self):
         box = self.driver.find_element(By.XPATH, "//*[@id='box-campaigns']")
@@ -75,10 +74,8 @@ class test_10(unittest.TestCase):
         price2 = self.driver.find_element(By.CLASS_NAME, "campaign-price")
         color_grey2 = re.findall(r"\d+", price2.value_of_css_property("color"))
         font_weight2 = price2.value_of_css_property("font-weight")
-        if int(color_grey1[1]) == 0 and int(color_grey1[2]) == 0 and int(color_grey2[1]) == 0 and int(
-                color_grey2[2]) == 0 and int(font_weight1) == 700 and int(font_weight2) == 700:
-            print("Тест пройден", color_grey1[1], color_grey1[2], "и", color_grey2[1], color_grey2[2],
-                  "- каналы G и B имеют нулевые значения и акционная цена жирная")
+        if int(color_grey1[1]) == 0 and int(color_grey1[2]) == 0 and int(color_grey2[1]) == 0 and int(color_grey2[2]) == 0 and int(font_weight1) == 700 and int(font_weight2) == 700:
+            print("Тест пройден", color_grey1[1], color_grey1[2], "и",color_grey2[1], color_grey2[2], "- каналы G и B имеют нулевые значения и акционная цена жирная")
         else:
             print("Тест не пройден")
         self.driver.back()
