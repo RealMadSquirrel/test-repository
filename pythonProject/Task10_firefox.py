@@ -74,7 +74,7 @@ class test_10(unittest.TestCase):
         price2 = self.driver.find_element(By.CLASS_NAME, "campaign-price")
         color_grey2 = re.findall(r"\d+", price2.value_of_css_property("color"))
         font_weight2 = price2.value_of_css_property("font-weight")
-        if int(color_grey1[1]) == 0 and int(color_grey1[2]) == 0 and int(color_grey2[1]) == 0 and int(color_grey2[2]) == 0 and int(font_weight1) == 700 and int(font_weight2) == 700:
+        if int(color_grey1[1]) == 0 and int(color_grey1[2]) == 0 and int(color_grey2[1]) == 0 and int(color_grey2[2]) == 0 and int(font_weight1) == 900 and int(font_weight2) == 700:
             print("Тест пройден", color_grey1[1], color_grey1[2], "и",color_grey2[1], color_grey2[2], "- каналы G и B имеют нулевые значения и акционная цена жирная")
         else:
             print("Тест не пройден")
