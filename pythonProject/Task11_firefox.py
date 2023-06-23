@@ -16,8 +16,7 @@ class test_11(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.options = webdriver.ChromeOptions()
-        cls.driver = webdriver.Chrome(options=cls.options)
+        cls.driver = webdriver.Firefox(capabilities={"marionette": False})
         cls.driver.maximize_window()
         cls.driver.get("http://localhost/litecart/en/create_account")
 
@@ -75,19 +74,19 @@ class test_11(unittest.TestCase):
 
         confirmed_password = self.driver.find_element(By.XPATH, "//*[@name='confirmed_password']")
         confirmed_password.send_keys(pword)
-
+        time.sleep(2)
         create_account = self.driver.find_element(By.XPATH, "//*[@name='create_account']")
         create_account.click()
-
+        time.sleep(2)
         create_account = self.driver.find_element(By.XPATH, "//*[@id='box-account']/div/ul/li[4]/a")
         create_account.click()
 
         self.driver.find_element(By.XPATH, "//*[@name='email']").send_keys(temp)
-
+        time.sleep(2)
         self.driver.find_element(By.XPATH, "//*[@name='password']").send_keys(pword)
-
+        time.sleep(2)
         self.driver.find_element(By.XPATH, "//*[@name='login']").click()
-
+        time.sleep(2)
         self.driver.find_element(By.XPATH, "//*[@id='box-account']/div/ul/li[4]/a").click()
 
 
