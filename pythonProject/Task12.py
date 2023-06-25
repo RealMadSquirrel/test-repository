@@ -7,6 +7,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import os.path
+from faker import Faker
+
 
 class test_12(unittest.TestCase):
     """Авторизуемся и вводим код"""
@@ -17,7 +19,6 @@ class test_12(unittest.TestCase):
         cls.driver = webdriver.Chrome(options=cls.options)
         cls.driver.maximize_window()
         cls.driver.get("http://localhost/litecart/admin")
-
 
     @classmethod
     def tearDownClass(cls):
@@ -40,10 +41,10 @@ class test_12(unittest.TestCase):
             i = i + 1
         self.driver.find_element(By.XPATH, "//*[@id='content']/div[1]/a[2]").click()
 
-
-    def test_general(self):
         self.driver.find_element(By.TAG_NAME,"label").find_element(By.XPATH, "//*[@value='1']").click()
-        self.driver.find_element(By.XPATH, "//input[@name='name[en]']").send_keys("Teddy")
+        fake = Faker()
+        name = fake.name()
+        self.driver.find_element(By.XPATH, "//input[@name='name[en]']").send_keys(name)
         self.driver.find_element(By.XPATH, "//input[@name='code']").send_keys("567")
         self.driver.find_element(By.XPATH, "//input[@value='1-3']").click()
         quantity = self.driver.find_element(By.XPATH, "//input[@name='quantity']")
@@ -53,10 +54,10 @@ class test_12(unittest.TestCase):
         self.driver.find_element(By.XPATH, "//input[@type='file']").send_keys(path)
         self.driver.find_element(By.XPATH, "//input[@name='date_valid_from']").send_keys(Keys.HOME + "01.01.2023")
         self.driver.find_element(By.XPATH, "//input[@name='date_valid_to']").send_keys(Keys.HOME + "01.01.2024")
-
-
-    def test_information(self):
-        self.driver.find_element(By.XPATH, "//*[@id='content']/form/div/ul/li[2]/a").click()
+        wait = WebDriverWait(self.driver, 15)
+        е = wait.until(
+            EC.presence_of_element_located((By.XPATH, "//*[@id='content']/form/div/ul/li[2]/a")))
+        е.click()
         wait = WebDriverWait(self.driver, 3)
         wait.until(EC.presence_of_element_located((By.XPATH, "//select[@name='manufacturer_id']")))
         self.driver.find_element(By.XPATH, "//select[@name='manufacturer_id']").find_element(By.XPATH, "option[@value='1']").click()
@@ -66,9 +67,10 @@ class test_12(unittest.TestCase):
         self.driver.find_element(By.XPATH, "//input[@name='head_title[en]']").send_keys("Toy")
         self.driver.find_element(By.XPATH, "//input[@name='meta_description[en]']").send_keys("Toy")
 
+        q = wait.until(
+            EC.presence_of_element_located((By.XPATH, "//*[@id='content']/form/div/ul/li[4]/a")))
+        q.click()
 
-    def test_prices(self):
-        self.driver.find_element(By.XPATH, "//*[@id='content']/form/div/ul/li[4]/a").click()
         wait = WebDriverWait(self.driver, 3)
         wait.until(EC.presence_of_element_located((By.XPATH, "//input[@name='purchase_price']")))
         price = self.driver.find_element(By.XPATH, "//input[@name='purchase_price']")
@@ -89,13 +91,13 @@ class test_12(unittest.TestCase):
         len_ = len(temp)
         i = 0
         while i < len_:
-            if temp[i].text == "Teddy":
-                print("товар добавлен")
+            t = temp[i].text
+            try:
+                self.assertEqual(temp[i].text,name)
+                print("Товар добавлен")
+            except AssertionError:
+                print("Другой товар")
             i = i + 1
-
-
-
-
 
 if __name__ == '__main__':
     unittest.main()
