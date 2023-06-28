@@ -43,46 +43,7 @@ class test_13(unittest.TestCase):
         cls.driver.quit()
 
     def test_add_new_product(self):
-        search_product = self.driver.find_element(By.XPATH, "//*[@id='box-most-popular']/div/ul")
-        search_product.find_element(By.XPATH, "li[1]").click()
-        add_to_cat = self.driver.find_element(By.XPATH, "//button[@name='add_cart_product']")
-        quantity = self.driver.find_element(By.CLASS_NAME, "quantity").text
-        if is_element_present(self.driver, By.XPATH, "//select[@required='required']") is True:
-            self.driver.find_element(By.XPATH, "//option[@value='Small']").click()
-            add_to_cat.click()
-            wait = WebDriverWait(self.driver, 10)
-            wait.until(EC.text_to_be_present_in_element((By.CLASS_NAME, "quantity"), str(int(quantity) + 1)))
-            quantity_new = self.driver.find_element(By.CLASS_NAME, "quantity").text
-            check_cat(quantity, quantity_new)
-            self.driver.back()
-        else:
-            add_to_cat.click()
-            wait = WebDriverWait(self.driver, 10)
-            wait.until(EC.text_to_be_present_in_element((By.CLASS_NAME, "quantity"), str(int(quantity) + 1)))
-            quantity_new = self.driver.find_element(By.CLASS_NAME, "quantity").text
-            check_cat(quantity, quantity_new)
-            self.driver.back()
-
-        search_product = self.driver.find_element(By.XPATH, "//*[@id='box-most-popular']/div/ul")
-        search_product.find_element(By.XPATH, "li[1]").click()
-        add_to_cat = self.driver.find_element(By.XPATH, "//button[@name='add_cart_product']")
-        quantity = self.driver.find_element(By.CLASS_NAME, "quantity").text
-        if is_element_present(self.driver, By.XPATH, "//select[@required='required']") is True:
-            self.driver.find_element(By.XPATH, "//option[@value='Small']").click()
-            add_to_cat.click()
-            wait = WebDriverWait(self.driver, 10)
-            wait.until(EC.text_to_be_present_in_element((By.CLASS_NAME, "quantity"), str(int(quantity) + 1)))
-            quantity_new = self.driver.find_element(By.CLASS_NAME, "quantity").text
-            check_cat(quantity, quantity_new)
-            self.driver.back()
-        else:
-            add_to_cat.click()
-            wait = WebDriverWait(self.driver, 10)
-            wait.until(EC.text_to_be_present_in_element((By.CLASS_NAME, "quantity"), str(int(quantity) + 1)))
-            quantity_new = self.driver.find_element(By.CLASS_NAME, "quantity").text
-            check_cat(quantity, quantity_new)
-            self.driver.back()
-
+      for i in range(3):
         search_product = self.driver.find_element(By.XPATH, "//*[@id='box-most-popular']/div/ul")
         search_product.find_element(By.XPATH, "li[1]").click()
         add_to_cat = self.driver.find_element(By.XPATH, "//button[@name='add_cart_product']")
